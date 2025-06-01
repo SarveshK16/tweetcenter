@@ -1,0 +1,32 @@
+{% extends "layout.html" %} 
+
+{% block title %}
+Tweets
+{% endblock %} 
+
+{% block content %}
+
+<h1 class="text-center mt-4">Welcome to Tweet Center's Tweet</h1>
+
+<a class="btn btn-primary mb-4" href="{% url "tweet_create" %}">Create a new tweet</a>
+
+<div class="container row gap-3">
+    {% for tweet in tweets %}
+    <div class="card" style="width: 18rem;">
+        {% if tweet.photo %}
+        <img src="{{ tweet.photo.url }}" class="card-img-top img-fluid object-fit-cover" style="width: 400px; height: 260px;" alt="...">
+        {% else %}
+        <img src="https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?ga=GA1.1.617143968.1739691588&semt=ais_hybrid&w=740" class="card-img-top" alt="...">
+        {% endif %}
+        <div class="card-body">
+            <h5 class="card-title">{{tweet.user.username}}</h5>
+            <p class="card-text">{{tweet.text}}</p>
+            {% if tweet.user == user %}
+            <a href="{% url "tweet_edit" tweet.id%}" class="btn btn-primary">Edit</a>
+            <a href="{% url "tweet_delete" tweet.id%}" class="btn btn-danger">Delete</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
